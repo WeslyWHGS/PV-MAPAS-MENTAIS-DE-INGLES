@@ -1288,7 +1288,31 @@
   </footer>
 
 
-  <script src="js/script.js"></script>
+  <script>
+    // FAQ accordion: opens one item at a time
+    document.querySelectorAll('.faq-trigger').forEach(function (trigger) {
+      var item = trigger.closest('.faq-item');
+      var content = item.querySelector('.faq-content');
+    
+      trigger.setAttribute('aria-expanded', 'false');
+    
+      trigger.addEventListener('click', function () {
+        var isOpen = item.classList.contains('active');
+    
+        document.querySelectorAll('.faq-item.active').forEach(function (openItem) {
+          openItem.classList.remove('active');
+          openItem.querySelector('.faq-content').style.maxHeight = null;
+          openItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+        });
+    
+        if (!isOpen) {
+          item.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 20 + 'px';
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
 
 
 </body></html>
